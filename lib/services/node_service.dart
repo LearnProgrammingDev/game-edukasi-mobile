@@ -59,4 +59,22 @@ class NodeService {
       return {'success': false, 'message': 'Koneksi gagal!'};
     }
   }
+
+  // Tambahkan method ini di dalam class NodeService
+  Future<Map<String, dynamic>> completeMateri(int nodeId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('${ApiConfig.baseUrl}/nodes/$nodeId/complete'),
+        headers: await _authHeaders,
+      );
+
+      final data = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return {'success': true, ...data};
+      }
+      return {'success': false, 'message': data['message']};
+    } catch (e) {
+      return {'success': false, 'message': 'Koneksi gagal!'};
+    }
+  }
 }
